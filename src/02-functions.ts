@@ -40,10 +40,16 @@ function addColleague(cs: Colleague[], name: string, department: string, email: 
 	cs.push(newColleague)
 }
 
-function sortColleagues(colleagues: Colleague[], sorter: (c1: Colleague, c2: Colleague) => number): EmailContact[] {
-  const sorted = colleagues.sort(sorter);
-  const result: EmailContact[] = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
-  return result 
+function sortColleagues(colleagues: Colleague[], sorter: (c1: Colleague, c2: Colleague) => number, max?: number): EmailContact[] {
+  
+	let end = colleagues.length;
+	if (max !== undefined){
+		end = max < 2 ? 1 : max;
+	}
+	const sorted = colleagues.sort(sorter);
+  	const fullResult = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
+  	
+	return fullResult.slice(0,end) 
 }
 
 
@@ -52,8 +58,9 @@ function findFriends(fs: Friend[], filter: (friend: Friend) => boolean ) : Frien
 	return result;
 }
 
-//console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension));
-//console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length));
+console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension, 1));
+console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length, 1));
+console.log(sortColleagues(colleagues.current, (a, b) => (a.name.length - b.name.length)));
 
 console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa')));
 console.log(findFriends(friends, (friend) => friend.age < 35));
