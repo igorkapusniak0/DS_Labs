@@ -1,4 +1,4 @@
-import {Friend, Colleague} from './myTypes'
+import {Friend, Colleague, EmailContact, FriendName} from './myTypes'
 import {friends, colleagues} from './01-basics.ts'
 
 function older(f: Friend) : string {
@@ -24,7 +24,7 @@ function highestExtension(cs: Colleague[]): Colleague {
 	return result[cs.length - 1];
 }
 
-function addColleague(cs: Colleague[] ,name: string, department: string, email: string){
+function addColleague(cs: Colleague[], name: string, department: string, email: string){
 	const csList = cs.sort(
 		(c1,c2) => c1.contact.extension - c2.contact.extension
 	);
@@ -40,10 +40,28 @@ function addColleague(cs: Colleague[] ,name: string, department: string, email: 
 	cs.push(newColleague)
 }
 
-console.log(older(friends[0]));
-console.log(allOlder(friends));
-console.log(highestExtension(colleagues.current));
-addColleague(colleagues.current, "Sheild O Connell", "HR", "soc@here.com");
-console.log(colleagues.current.filter((c) => c.name === "Sheild O Connell"));
+function sortColleagues(colleagues: Colleague[], sorter: (c1: Colleague, c2: Colleague) => number): EmailContact[] {
+  const sorted = colleagues.sort(sorter);
+  const result: EmailContact[] = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
+  return result 
+}
+
+
+function findFriends(fs: Friend[], filter: (friend: Friend) => boolean ) : FriendName[] {
+	const result: FriendName[] = fs.filter(filter).map(friend => ({name: friend.name}));
+	return result;
+}
+
+//console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension));
+//console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length));
+
+console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa')));
+console.log(findFriends(friends, (friend) => friend.age < 35));
+
+//console.log(older(friends[0]));
+//console.log(allOlder(friends));
+//console.log(highestExtension(colleagues.current));
+//addColleague(colleagues.current, "Sheild O Connell", "HR", "soc@here.com");
+//console.log(colleagues.current.filter((c) => c.name === "Sheild O Connell"));
 
 
