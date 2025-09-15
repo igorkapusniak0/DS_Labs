@@ -58,12 +58,20 @@ function findFriends(fs: Friend[], filter: (friend: Friend) => boolean ) : Frien
 	return result;
 }
 
-console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension, 1));
-console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length, 1));
-console.log(sortColleagues(colleagues.current, (a, b) => (a.name.length - b.name.length)));
+function addInterest(friend: Friend, interest: string){
+	(friend.interests ??= []).push(interest);
+	return friend;
+}
 
-console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa')));
-console.log(findFriends(friends, (friend) => friend.age < 35));
+console.log(addInterest(friends[1], 'Politics'))
+
+
+//console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension, 1));
+//console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length, 1));
+//console.log(sortColleagues(colleagues.current, (a, b) => (a.name.length - b.name.length)));
+
+//console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa')));
+//console.log(findFriends(friends, (friend) => friend.age < 35));
 
 //console.log(older(friends[0]));
 //console.log(allOlder(friends));
