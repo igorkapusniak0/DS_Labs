@@ -13,6 +13,11 @@ interface Colleague {
 	};
 }
 
+interface ColleagueHistory {
+	current: Colleague[],
+	former: Colleague[];
+}
+
 const friend1: Friend = {
 	name: "Paul Fleming",
 	phone: "087-123456",
@@ -57,7 +62,7 @@ const colleague3: Colleague = {
 };
 
 
-const colleagues = {
+export const colleagues: ColleagueHistory = {
   current: [colleague1, colleague2, colleague3],
   former: [],
 };
